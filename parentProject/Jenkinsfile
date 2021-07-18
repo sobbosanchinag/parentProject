@@ -2,9 +2,11 @@ pipeline{
   agent any
   
   stages{
-    stage ("build"){
+    stage ("checkout"){
         steps{
-          echo 'build step'
+          echo 'checkout step started'
+          checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '^dev|master.*$']], extensions: [], userRemoteConfigs: [[credentialsId: 'jenkinsTest', url: 'https://github.com/sobbosanchinag/parentProject.git']]]
+          echo 'checkout step'
         }
     }
     stage ("test"){
